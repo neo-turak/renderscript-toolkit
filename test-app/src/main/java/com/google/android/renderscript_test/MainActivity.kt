@@ -16,11 +16,14 @@
 
 package com.google.android.renderscript_test
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.imageview.ShapeableImageView
+import com.google.android.renderscript.Toolkit
 
 
-@ExperimentalUnsignedTypes
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,5 +38,9 @@ class MainActivity : AppCompatActivity() {
         } catch (e: ReflectiveOperationException) {
             throw RuntimeException(e)
         }
+         val testImage1 = BitmapFactory.decodeResource(resources, R.drawable.img800x450b)
+         val result=Toolkit.blur(testImage1,1)
+        findViewById<ShapeableImageView>(R.id.siv).setImageBitmap(result)
+
     }
 }

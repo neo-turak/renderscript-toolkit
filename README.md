@@ -1,76 +1,57 @@
-# RenderScript Intrinsics Replacement Toolkit - v0.8 BETA
+<p align="center">
+<img src="./img/tools.svg" alt="logo" width="20%">
+</p>
+<h1 align="center">Toolkit</h1>
 
-This Toolkit provides a collection of high-performance image manipulation functions
-like blur, blend, and resize. It can be used as a stand-alone replacement for most
-of the deprecated RenderScript Intrinsics functions. 
+<p align="center">
+该工具包提供了一系列高性能图像处理功能 如模糊、混合和调整大小。已弃用的RenderScript Intrinsics函数的完美替代品。
+</p>
 
-The Toolkit provides ten image manipulation functions:
-* blend,
-* blur,
-* color matrix,
-* convolve,
-* histogram and histogramDot,
-* LUT (lookup table) and LUT 3D,
-* resize, and
-* YUV to RGB.
+## 使用方法
+- [Gradle引入](#Gradle引入)
 
-The Toolkit provides a C++ and a Java/Kotlin interface. It is packaged as an Android
-library that you can add to your project.
+## 包含功能
+- [混合模式](#混合模式)
+- [高斯模糊](#高斯模糊)
+- [颜色矩阵滤镜](#颜色矩阵滤镜)
+- [盲卷积](#盲卷积)
+- [直方图和直方图点](#直方图和直方图点),
+- [LUT(查找表)和LUT 3D](#LUT 和 LUT 3D)
+- [调整大小](#调整大小)
+- [YUV to RGB](#YUV to RGB)
 
-These functions execute multithreaded on the CPU. They take advantage of Neon/AdvSimd
-on Arm processors and SSE on Intel's.
+该工具包提供了一个C++和一个Java/Kotlin接口。它被打包为Android 可以添加到项目中的库。
+这些函数在CPU上执行多线程。他们利用霓虹灯/AdvSimd ，在Arm处理器和英特尔的SSE上。
+与RenderScript Intrinsics相比，该工具包使用更简单，当在CPU上执行时，速度是前者的两倍。但是，
+RenderScript内部函数允许更大的灵活性 支持的分配类型。该工具包不支持浮动分配；
+大多数函数支持字节数组和位图。
 
-Compared to the RenderScript Intrinsics, this Toolkit is simpler to use and twice as fast
-when executing on the CPU. However RenderScript Intrinsics allow more flexibility for
-the type of allocations supported. This toolkit does not support allocations of floats;
-most the functions support ByteArrays and Bitmaps.
+您应该实例化工具箱一次，并在整个应用程序中重用它。
+在实例化时，工具箱创建一个线程池，用于处理所有函数。
+您可以通过构造函数限制工具箱使用的池线程数。池线程中在完成任何未决工作后，一旦工具包被销毁，就会被销毁。
 
-You should instantiate the Toolkit once and reuse it throughout your application.
-On instantiation, the Toolkit creates a thread pool that's used for processing all the functions.
-You can limit the number of poolThreads used by the Toolkit via the constructor. The poolThreads
-are destroyed once the Toolkit is destroyed, after any pending work is done.
+此库是线程安全的。您可以从不同的池线程调用方法。这些功能将： 按顺序执行。
 
-This library is thread safe. You can call methods from different poolThreads. The functions will
-execute sequentially.
+# Gradle引入
 
- 
-## Future improvement ideas:
-
-* Turn the Java version of the Toolkit into a singleton, to reduce the chance that someone inadventarly
-create multiple threadpools.
-
-* Support ByteBuffer. It should be straightforward to use GetDirectBufferAddress in JniEntryPoints.cpp.
-See https://developer.android.com/training/articles/perf-jni and jni_helper.h.
-
-* The RenderScript Intrinsics support floats for colorMatrix, convolve, and resize. The Toolkit does not.
-
-* Allow in place update of buffers, or writing to an existing byte array.
-
-* For Blur, we could have a version that accepts a mask. This is commonly used for background
-blurring. We should allow the mask to be smaller than the original, since neural networks models
-that do segmentation are downscaled.
-
-* Allow yuvToRgb to have a Restriction.
-
-* Add support for YUV_420_888, the YUV format favored by Camera2. Allow various strides to be specified.
-
-* When passing a Restriction, it would be nice to say "Create a smaller output".
-The original RenderScript does not allow that. It's not that useful when outputing new buffers as
-our Java library does.
-
-* For Resize, Restriction working on input buffer would be more useful but that's not RenderScript.
-
-* Integrate and test with imageprocessing_jb. Do the same for [github/renderscript-samples/](https://github.com/android/renderscript-samples/tree/main/RenderScriptIntrinsic)
-
-* Allow Bitmaps with rowSize != width * vectorSize. We could do this also for ByteArray.
-
-- In TaskProcessor.cpp, the code below is fine and clean, but probably a bit inefficient. 
-When this wakes up another thread, it may have to immediately go back to sleep, since we still hold the lock.
-It could instead set a need_to_notify flag and test that after releasing the lock (both places).
-That might avoid some context switches.
-```cpp
-if (mTilesInProcess == 0 && mTilesNotYetStarted == 0) {
-    mWorkIsFinished.notify_one();
+```groovy
+   
 ```
 
-* When compiled as part of Android, librenderscript_toolkit.so is 101,456 bytes. When compiled by Android Studio as part of an .aar, it's 387K. Figure out why and slim it down.
+# 混合模式
+
+# 高斯模糊
+
+# 颜色矩阵滤镜
+
+# 盲卷积
+
+# 直方图和直方图点
+
+# 直方图和直方图点
+
+# LUT 和 LUT 3D
+
+# 调整大小
+
+# YUV to RGB
