@@ -2,7 +2,9 @@
 <img src="./img/tools.svg" alt="logo" width="20%">
 </p>
 <h1 align="center">Toolkit</h1>
-
+<p align="center">
+<a href="https://jitpack.io/#Neo-Turak/renderscript-toolkit"><img src="https://jitpack.io/v/Neo-Turak/renderscript-toolkit.svg"></a>
+</p>
 <p align="center">
 该工具包提供了一系列高性能图像处理功能 如模糊、混合和调整大小。已弃用的RenderScript Intrinsics函数的完美替代品。
 </p>
@@ -11,7 +13,7 @@
 - [Gradle引入](#Gradle引入)
 
 ## 包含功能
-- [混合模式](## 混合模式)
+- [混合模式](##混合模式)
 - [高斯模糊](##高斯模糊)
 - [颜色矩阵滤镜](#颜色矩阵滤镜)
 - [盲卷积](#盲卷积)
@@ -33,9 +35,20 @@ RenderScript内部函数允许更大的灵活性 支持的分配类型。该工�
 此库是线程安全的。您可以从不同的池线程调用方法。这些功能将： 按顺序执行。
 
 ## Gradle引入
-
+jitpack远程仓库
 ```groovy
-   
+   	allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+引用
+```groovy
+	dependencies {
+	        implementation 'com.github.Neo-Turak:renderscript-toolkit:v0.8'
+	}
 ```
 
 ## 混合模式
