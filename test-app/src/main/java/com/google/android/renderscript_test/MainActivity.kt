@@ -20,8 +20,10 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.imageview.ShapeableImageView
+import com.google.android.renderscript.BlendingMode
+import com.google.android.renderscript.LookupTable
+import com.google.android.renderscript.Rgba3dArray
 import com.google.android.renderscript.Toolkit
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -38,9 +40,6 @@ class MainActivity : AppCompatActivity() {
         } catch (e: ReflectiveOperationException) {
             throw RuntimeException(e)
         }
-         val testImage1 = BitmapFactory.decodeResource(resources, R.drawable.img800x450b)
-         val result=Toolkit.blur(testImage1,1)
-        findViewById<ShapeableImageView>(R.id.siv).setImageBitmap(result)
 
     }
 }

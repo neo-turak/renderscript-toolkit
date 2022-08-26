@@ -51,20 +51,104 @@ jitpack远程仓库
 	}
 ```
 
+实例中使用的图片：
+
+![img800*450b](img/testImage1.png)
+
+![img800x450a](img/testImage2.png)
+
 ## 混合模式
+
+使用方法：**ToolKit.blend()** 方法，重载2个。
+```kotlin
+        val testImage1 = BitmapFactory.decodeResource(resources, R.drawable.img800x450b)
+        val testImage2 = BitmapFactory.decodeResource(resources, R.drawable.img800x450a)
+        Toolkit.blend(BlendingMode.ADD, testImage1, testImage2)
+        findViewById<ShapeableImageView>(R.id.siv).setImageBitmap(testImage2)
+```
+效果：
+
+![blend](img/blend.png)
 
 ## 高斯模糊
 
+使用方法: **Toolkit.blue()** 请注意取值范围(1-5)
+```kotlin
+         val testImage1 = BitmapFactory.decodeResource(resources, R.drawable.img800x450b)
+         val result=Toolkit.blur(testImage1,3)
+        findViewById<ShapeableImageView>(R.id.siv).setImageBitmap(result)
+```
+效果：
+
+![blur](img/blur.png)
+
+
+
 ## 颜色矩阵滤镜
+
+使用方法：**Toolkit.colorMatrix()**
+
+
 
 ## 盲卷积
 
-## 直方图和直方图点
+使用方法：Toolkit.convolve()
+
+```kotlin
+        val testImage1 = BitmapFactory.decodeResource(resources, R.drawable.img800x450b)
+        // val  testImage2 = BitmapFactory.decodeResource(resources, R.drawable.img800x450a)
+        val result = Toolkit.convolve(
+            testImage1,
+            floatArrayOf(1F, 1F, 1f, 1f, 1f, 1f, 1f, 1f, 1f)
+        )
+        findViewById<ShapeableImageView>(R.id.siv).setImageBitmap(result)
+```
+效果：
+
+![convolve](img/convolve.png)
+
+
 
 ## 直方图和直方图点
+
+使用方法：Toolkit.histogram()直方图
+        Toolkit.histogramDot()直方图点
 
 ## LUT 和 LUT 3D
+使用方法：Toolkit.lut() 和Toolkit.loot3d()
+```kotlin
+   val testImage1 = BitmapFactory.decodeResource(resources, R.drawable.img800x450b)
+        // val  testImage2 = BitmapFactory.decodeResource(resources, R.drawable.img800x450a)
+        val lookupTable=LookupTable()
+        lookupTable.blue= byteArrayOf(10)
+        val result = Toolkit.lut(
+            testImage1,
+            lookupTable
+        )
+        findViewById<ShapeableImageView>(R.id.siv).setImageBitmap(result)
+```
+
+效果:
+
+![lut](img/lut.png)
 
 ## 调整大小
 
+使用方法：Toolkit.resize()
+
+```kotlin
+        val testImage1 = BitmapFactory.decodeResource(resources, R.drawable.img800x450b)
+        // val  testImage2 = BitmapFactory.decodeResource(resources, R.drawable.img800x450a)
+        val result = Toolkit.resize(
+            testImage1,
+            100,50
+        )
+        findViewById<ShapeableImageView>(R.id.siv).setImageBitmap(result)
+```
+效果：
+
+![resize](img/resize.png)
+
 ## YUV to RGB
+
+使用方法：Toolkit.yuvToRgb() 等等。
